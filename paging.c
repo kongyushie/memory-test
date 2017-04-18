@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#define time 5
+#define time 4
 #define MB_COUNT (1024*time)
 #define MB_BYTE (1024 * 1024)
 

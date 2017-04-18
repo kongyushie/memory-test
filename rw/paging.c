@@ -1,14 +1,15 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#define time 6
+#define time         1
+#define write_time   1
 #define MB_COUNT (1024*time)
 #define MB_BYTE (1024 * 1024)
 
-void do_writing(const unsigned long max_idx, unsigned long *ptr)
+void do_writing(const unsigned long max_idx, unsigned long *ptr_start)
 {
 	unsigned long idx = 0;
-	
+	unsigned long *ptr = ptr_start;
 	for (idx = 0; idx <= max_idx ; idx++, ptr++) {
 		*ptr = idx;
 	}
@@ -19,6 +20,8 @@ void do_rw(const unsigned long max_idx, unsigned long *ptr_start)
 	unsigned long *ptr = NULL;
 	unsigned long idx = 0;
 	ptr = ptr_start;
+	int i;
+	for(i=0;i< write_time;i++)
 	for (idx = 0; idx <= max_idx; idx++, ptr++) {
 		if (idx != *ptr) {
 			printf(" Miss num in Ptr addr = %p, value = %lu; idx = %lu\n", ptr, *ptr, idx);
@@ -41,15 +44,15 @@ int main () {
 	unsigned long *ptr_start = NULL;
 	unsigned long *ptr = NULL;
 	ptr_start = ptr = (unsigned long *)malloc(byte_count);
-	//printf("Try to malloc %u MB...\n", 5*byte_count/MB_BYTE);
+	printf("Try to malloc %u MB...", MB_COUNT);
 	if( ptr == NULL ) {
 		printf("malloc %luMB failed\n", byte_count/MB_COUNT);
 	} else {
 		printf("malloc success\n");
 		printf("Ptr start = %p; addr = %p; max_idx=%lu\n", ptr_start, ptr, max_idx);
 	}
-	do_writing(max_idx, ptr);
-	//do_writing(max_idx, ptr_start);
+	do_writing(max_idx, ptr_start);
+	do_writing(max_idx, ptr_start);
 
 	printf("Reset addr %p to start = %p; \n", ptr, ptr_start);
 	free(ptr_start);
