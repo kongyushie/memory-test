@@ -2,7 +2,7 @@
 #include <stdlib.h>
 
 #define time         1
-#define write_time   1
+#define write_time   2
 #define MB_COUNT (1024*time)
 #define MB_BYTE (1024 * 1024)
 
@@ -22,13 +22,13 @@ void do_rw(const unsigned long max_idx, unsigned long *ptr_start)
 	ptr = ptr_start;
 	int i;
 	for(i=0;i< write_time;i++)
-	for (idx = 0; idx <= max_idx; idx++, ptr++) {
+	for (idx = 0, ptr = ptr_start; idx <= max_idx; idx++, ptr++) {
 		if (idx != *ptr) {
 			printf(" Miss num in Ptr addr = %p, value = %lu; idx = %lu\n", ptr, *ptr, idx);
 		}
 
 		if (idx == max_idx) {
-			printf("The last Ptr addr = %p, value = %lu\n", ptr, *ptr);
+			printf("run %d\n", i);
 		}
 	}
 	
@@ -52,7 +52,7 @@ int main () {
 		printf("Ptr start = %p; addr = %p; max_idx=%lu\n", ptr_start, ptr, max_idx);
 	}
 	do_writing(max_idx, ptr_start);
-	do_writing(max_idx, ptr_start);
+	do_rw(max_idx, ptr_start);
 
 	printf("Reset addr %p to start = %p; \n", ptr, ptr_start);
 	free(ptr_start);
