@@ -1,2 +1,2 @@
 #!/bin/bash
-./paging -s $1 -w $2
+/usr/bin/time -v ./paging -s $1 -w $2
